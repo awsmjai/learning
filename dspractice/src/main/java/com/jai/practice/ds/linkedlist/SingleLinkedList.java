@@ -48,12 +48,16 @@ public class SingleLinkedList
 		}
 		else
 		{
+			deletedData = head.getData();
 			if( head.getNextNode() == null )
 			{
 				tail = null;
+				head = null;
 			}
-			deletedData = head.getData();
-			head = head.getNextNode();
+			else
+			{
+				head = head.getNextNode();
+			}
 		}
 		return deletedData;
 	}
@@ -65,7 +69,7 @@ public class SingleLinkedList
 		Node slow = head;
 		Node fast = head;
 
-		while( fast != null && fast.getNextNode() != null )
+		while(fast != null && fast.getNextNode() != null)
 		{
 			value++;
 			slow = slow.getNextNode();
@@ -89,7 +93,7 @@ public class SingleLinkedList
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append("SingleLinkedList: [");
-		if(head != null)
+		if( head != null )
 		{
 			Node current = head;
 			while(current != null)
