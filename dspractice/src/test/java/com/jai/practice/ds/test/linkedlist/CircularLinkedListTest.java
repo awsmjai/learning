@@ -1,19 +1,19 @@
 package com.jai.practice.ds.test.linkedlist;
 
-import com.jai.practice.ds.linkedlist.SingleLinkedList;
+import com.jai.practice.ds.linkedlist.CircularLinkedList;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SingleLinkedListTest
+public class CircularLinkedListTest
 {
-	private static final Logger logger = LoggerFactory.getLogger(SingleLinkedListTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(CircularLinkedListTest.class);
 
 	@Test
 	public void testAddElementAtHead()
 	{
-		SingleLinkedList list = new SingleLinkedList();
+		CircularLinkedList list = new CircularLinkedList();
 		for( int i = 0; i < 5; i++ )
 		{
 			list.addElementAtHead(i);
@@ -25,7 +25,7 @@ public class SingleLinkedListTest
 	@Test
 	public void testAddElementAtTail()
 	{
-		SingleLinkedList list = new SingleLinkedList();
+		CircularLinkedList list = new CircularLinkedList();
 		for( int i = 0; i < 5; i++ )
 		{
 			list.addElementAtTail(i);
@@ -37,7 +37,7 @@ public class SingleLinkedListTest
 	@Test
 	public void testDeleteElement()
 	{
-		SingleLinkedList list = new SingleLinkedList();
+		CircularLinkedList list = new CircularLinkedList();
 		list.addElementAtHead(1);
 		logger.info("testDeleteElement List: {}", list);
 		Assert.assertEquals("size of the linked list: ", 1, list.size());

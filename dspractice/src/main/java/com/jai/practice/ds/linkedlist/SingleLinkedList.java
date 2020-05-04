@@ -1,7 +1,11 @@
 package com.jai.practice.ds.linkedlist;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SingleLinkedList
 {
+	private static final Logger logger = LoggerFactory.getLogger(SingleLinkedList.class);
 	private Node head = null;
 	private Node tail = null;
 
@@ -40,7 +44,7 @@ public class SingleLinkedList
 		int deletedData = Integer.MIN_VALUE;
 		if( head == null )
 		{
-			System.out.println("Linked list doesn't have any element!");
+			logger.info("Linked list doesn't have any element!");
 		}
 		else
 		{
