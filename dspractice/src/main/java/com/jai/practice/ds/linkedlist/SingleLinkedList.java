@@ -44,7 +44,7 @@ public class SingleLinkedList
 		int deletedData = Integer.MIN_VALUE;
 		if( head == null )
 		{
-			logger.info("Linked list doesn't have any element!");
+			logger.info("SingleLinkedList is empty!");
 		}
 		else
 		{

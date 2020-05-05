@@ -3,27 +3,26 @@ package com.jai.practice.ds.linkedlist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CircularLinkedList
+public class CircularDoublyLinkedList
 {
-	private static final Logger logger = LoggerFactory.getLogger(CircularLinkedList.class);
-
-	private int data;
-	private Node head = null;
-	private Node tail = null;
+	private static final Logger logger = LoggerFactory.getLogger(CircularDoublyLinkedList.class);
+	private DoubleNode head = null;
+	private DoubleNode tail = null;
 
 	public void addElementAtHead(int data)
 	{
-		Node node = new Node();
+		DoubleNode node = new DoubleNode();
 		node.setData(data);
 		if( head == null )
 		{
 			head = node;
 			tail = node;
-			node.setNextNode(node);
+			head.setNextNode(head);
 		}
 		else
 		{
 			node.setNextNode(head);
+			head.setPrevNode(node);
 			head = node;
 			tail.setNextNode(head);
 		}
@@ -31,41 +30,67 @@ public class CircularLinkedList
 
 	public void addElementAtTail(int data)
 	{
-		Node node = new Node();
+		DoubleNode node = new DoubleNode();
 		node.setData(data);
 		if( head == null )
 		{
 			head = node;
 			tail = node;
-			node.setNextNode(node);
+			head.setNextNode(head);
 		}
 		else
 		{
+			node.setPrevNode(tail);
 			tail.setNextNode(node);
 			tail = node;
 			tail.setNextNode(head);
 		}
 	}
 
-	public int deleteElement()
+	public int deleteElementFromHead()
 	{
 		int deletedData = Integer.MIN_VALUE;
 		if( head == null )
 		{
-			logger.info("CircularLinkedList is empty!");
+			logger.info("CircularDoublyLinkedList is empty!");
 		}
 		else
 		{
 			deletedData = head.getData();
 			if( head.getNextNode() == head )
 			{
-				head.setNextNode(null);
 				head = null;
 				tail = null;
 			}
 			else
 			{
 				head = head.getNextNode();
+				head.setPrevNode(null);
+				tail.setNextNode(head);
+			}
+		}
+
+		return deletedData;
+	}
+
+	public int deleteElementFromTail()
+	{
+		int deletedData = Integer.MIN_VALUE;
+		if( head == null )
+		{
+			logger.info("CircularDoublyLinkedList is empty!");
+		}
+		else
+		{
+			deletedData = tail.getData();
+			if( head.getNextNode() == head )
+			{
+				head = null;
+				tail = null;
+			}
+			else
+			{
+				tail = tail.getPrevNode();
 				tail.setNextNode(head);
 			}
 		}
@@ -77,25 +102,25 @@ public class CircularLinkedList
 	{
 		int value = 1;
 		int size = 0;
-		Node slow = head;
-		Node fast = head;
+		DoubleNode start = head;
+		DoubleNode end = tail;
 
-		if( fast != null )
+		if( head != null )
 		{
-			while(fast.getNextNode() != head && fast.getNextNode().getNextNode() != head)
+			while(start != null && end != null && start != end & start.getNextNode() != end.getPrevNode())
 			{
 				value++;
-				slow = slow.getNextNode();
-				fast = fast.getNextNode().getNextNode();
+				start = start.getNextNode();
+				end = end.getPrevNode();
 			}
 
-			if( fast.getNextNode() != head )  // for even number of linked list
+			if( start == end )  // for even number of linked list
 			{
-				size = value * 2;
+				size = (value * 2) - 1;
 			}
 			else                // for odd number of linked list
 			{
-				size = (value * 2) - 1;
+				size = (value * 2) + 1;
 			}
 		}
 
@@ -106,10 +131,10 @@ public class CircularLinkedList
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append("CircularLinkedList: [");
+		builder.append("CircularDoublyLinkedList: [");
 		if( head != null )
 		{
-			Node current = head;
+			DoubleNode current = head;
 			while(current.getNextNode() != head)
 			{
 				builder.append(current.getData())
