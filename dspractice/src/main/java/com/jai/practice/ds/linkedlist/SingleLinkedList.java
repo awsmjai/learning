@@ -13,7 +13,7 @@ public class SingleLinkedList
 	{
 		Node node = new Node();
 		node.setData(data);
-		if( head == null )
+		if( isEmptyList() )
 		{
 			tail = node;
 		}
@@ -28,7 +28,7 @@ public class SingleLinkedList
 	{
 		Node node = new Node();
 		node.setData(data);
-		if( head == null )
+		if( isEmptyList() )
 		{
 			head = node;
 		}
@@ -39,10 +39,40 @@ public class SingleLinkedList
 		tail = node;
 	}
 
+	public void addElementAt(int data, int location)
+	{
+		if( location < 0 || location > size() )
+		{
+			logger.error("wrong location given!");
+			return;
+		}
+
+		if( location == 0 || isEmptyList() )
+		{
+			addElementAtHead(data);
+		}
+		else if( location == size() )
+		{
+			addElementAtTail(data);
+		}
+		else
+		{
+			Node node = new Node();
+			node.setData(data);
+			Node current = head;
+			for( int i = 1; i < location - 1; i++ )
+			{
+				current = current.getNextNode();
+			}
+			node.setNextNode(current.getNextNode());
+			current.setNextNode(node);
+		}
+	}
+
 	public int deleteElement()
 	{
 		int deletedData = Integer.MIN_VALUE;
-		if( head == null )
+		if( isEmptyList() )
 		{
 			logger.info("SingleLinkedList is empty!");
 		}
@@ -57,6 +87,42 @@ public class SingleLinkedList
 			else
 			{
 				head = head.getNextNode();
+			}
+		}
+		return deletedData;
+	}
+
+	public int deleteElementAt(int location)
+	{
+		int deletedData = Integer.MIN_VALUE;
+
+		if( location < 0 || location > size() )
+		{
+			logger.error("wrong location given!");
+			return deletedData;
+		}
+
+		if( isEmptyList() )
+		{
+			logger.error("list empty!");
+		}
+
+		if( location == 0 )
+		{
+			deletedData = deleteElement();
+		}
+		else
+		{
+			Node current = head;
+			for( int i = 1; i < location - 1; i++ )
+			{
+				current = current.getNextNode();
+			}
+			deletedData = current.getNextNode().getData();
+			current.setNextNode(current.getNextNode().getNextNode());
+			if( location == size() )
+			{
+				tail = current;
 			}
 		}
 		return deletedData;
@@ -86,6 +152,36 @@ public class SingleLinkedList
 		}
 
 		return size;
+	}
+
+	public int search(int data)
+	{
+		int position = Integer.MIN_VALUE;
+		if( isEmptyList() )
+		{
+			logger.error("empty list!");
+			return position;
+		}
+		int value = 0;
+		Node current = head;
+		while(current != null)
+		{
+			if( current.getData() == data )
+			{
+				position = value;
+				break;
+			}
+			value++;
+			current = current.getNextNode();
+		}
+
+		return position;
+
+	}
+
+	public boolean isEmptyList()
+	{
+		return head == null;
 	}
 
 	@Override

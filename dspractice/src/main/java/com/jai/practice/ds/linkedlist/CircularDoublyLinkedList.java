@@ -13,17 +13,19 @@ public class CircularDoublyLinkedList
 	{
 		DoubleNode node = new DoubleNode();
 		node.setData(data);
-		if( head == null )
+		if( isEmptyList() )
 		{
 			head = node;
 			tail = node;
 			head.setNextNode(head);
+			head.setPrevNode(head);
 		}
 		else
 		{
 			node.setNextNode(head);
 			head.setPrevNode(node);
 			head = node;
+			head.setPrevNode(tail);
 			tail.setNextNode(head);
 		}
 	}
@@ -32,11 +34,12 @@ public class CircularDoublyLinkedList
 	{
 		DoubleNode node = new DoubleNode();
 		node.setData(data);
-		if( head == null )
+		if( isEmptyList() )
 		{
 			head = node;
 			tail = node;
 			head.setNextNode(head);
+			head.setPrevNode(head);
 		}
 		else
 		{
@@ -44,28 +47,31 @@ public class CircularDoublyLinkedList
 			tail.setNextNode(node);
 			tail = node;
 			tail.setNextNode(head);
+			head.setPrevNode(tail);
 		}
 	}
 
 	public int deleteElementFromHead()
 	{
 		int deletedData = Integer.MIN_VALUE;
-		if( head == null )
+		if( isEmptyList() )
 		{
-			logger.info("CircularDoublyLinkedList is empty!");
+			logger.error("CircularDoublyLinkedList is empty!");
 		}
 		else
 		{
 			deletedData = head.getData();
 			if( head.getNextNode() == head )
 			{
+				head.setNextNode(null);
+				head.setPrevNode(null);
 				head = null;
 				tail = null;
 			}
 			else
 			{
 				head = head.getNextNode();
-				head.setPrevNode(null);
+				head.setPrevNode(tail);
 				tail.setNextNode(head);
 			}
 		}
@@ -76,15 +82,17 @@ public class CircularDoublyLinkedList
 	public int deleteElementFromTail()
 	{
 		int deletedData = Integer.MIN_VALUE;
-		if( head == null )
+		if( isEmptyList() )
 		{
-			logger.info("CircularDoublyLinkedList is empty!");
+			logger.error("CircularDoublyLinkedList is empty!");
 		}
 		else
 		{
 			deletedData = tail.getData();
 			if( head.getNextNode() == head )
 			{
+				head.setPrevNode(null);
+				head.setNextNode(null);
 				head = null;
 				tail = null;
 			}
@@ -92,6 +100,7 @@ public class CircularDoublyLinkedList
 			{
 				tail = tail.getPrevNode();
 				tail.setNextNode(head);
+				head.setPrevNode(tail);
 			}
 		}
 
@@ -125,6 +134,11 @@ public class CircularDoublyLinkedList
 		}
 
 		return size;
+	}
+
+	public boolean isEmptyList()
+	{
+		return head == null;
 	}
 
 	@Override
