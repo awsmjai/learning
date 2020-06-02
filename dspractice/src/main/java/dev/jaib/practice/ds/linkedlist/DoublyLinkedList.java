@@ -1,11 +1,11 @@
-package com.jai.practice.ds.linkedlist;
+package dev.jaib.practice.ds.linkedlist;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CircularDoublyLinkedList
+public class DoublyLinkedList
 {
-	private static final Logger logger = LoggerFactory.getLogger(CircularDoublyLinkedList.class);
+	private static final Logger logger = LoggerFactory.getLogger(DoublyLinkedList.class);
 	private DoubleNode head = null;
 	private DoubleNode tail = null;
 
@@ -13,20 +13,16 @@ public class CircularDoublyLinkedList
 	{
 		DoubleNode node = new DoubleNode();
 		node.setData(data);
-		if( isEmptyList() )
+		if( head == null )
 		{
 			head = node;
 			tail = node;
-			head.setNextNode(head);
-			head.setPrevNode(head);
 		}
 		else
 		{
 			node.setNextNode(head);
 			head.setPrevNode(node);
 			head = node;
-			head.setPrevNode(tail);
-			tail.setNextNode(head);
 		}
 	}
 
@@ -34,77 +30,67 @@ public class CircularDoublyLinkedList
 	{
 		DoubleNode node = new DoubleNode();
 		node.setData(data);
-		if( isEmptyList() )
+		if( head == null )
 		{
 			head = node;
 			tail = node;
-			head.setNextNode(head);
-			head.setPrevNode(head);
 		}
 		else
 		{
 			node.setPrevNode(tail);
 			tail.setNextNode(node);
 			tail = node;
-			tail.setNextNode(head);
-			head.setPrevNode(tail);
 		}
 	}
 
 	public int deleteElementFromHead()
 	{
-		int deletedData = Integer.MIN_VALUE;
-		if( isEmptyList() )
+		int elementDeleted = Integer.MIN_VALUE;
+		if( head == null )
 		{
-			logger.error("CircularDoublyLinkedList is empty!");
+			logger.info("DoublyLinkedList is empty!");
 		}
 		else
 		{
-			deletedData = head.getData();
-			if( head.getNextNode() == head )
+			elementDeleted = head.getData();
+			if( head.getNextNode() == null )
 			{
-				head.setNextNode(null);
-				head.setPrevNode(null);
-				head = null;
 				tail = null;
+				head = null;
 			}
 			else
 			{
 				head = head.getNextNode();
-				head.setPrevNode(tail);
-				tail.setNextNode(head);
+				head.setPrevNode(null);
 			}
 		}
 
-		return deletedData;
+		return elementDeleted;
 	}
 
 	public int deleteElementFromTail()
 	{
-		int deletedData = Integer.MIN_VALUE;
-		if( isEmptyList() )
+		int elementDeleted = Integer.MIN_VALUE;
+		if( head == null )
 		{
-			logger.error("CircularDoublyLinkedList is empty!");
+			logger.info("DoublyLinkedList is empty!");
 		}
 		else
 		{
-			deletedData = tail.getData();
-			if( head.getNextNode() == head )
+			elementDeleted = tail.getData();
+			if( head.getNextNode() == null )
 			{
-				head.setPrevNode(null);
-				head.setNextNode(null);
 				head = null;
 				tail = null;
 			}
 			else
 			{
 				tail = tail.getPrevNode();
-				tail.setNextNode(head);
-				head.setPrevNode(tail);
+				tail.setNextNode(null);
 			}
 		}
 
-		return deletedData;
+		return elementDeleted;
 	}
 
 	public int size()
@@ -116,7 +102,7 @@ public class CircularDoublyLinkedList
 
 		if( head != null )
 		{
-			while(start != null && end != null && start != end & start.getNextNode() != end.getPrevNode())
+			while(start != null && tail != null && start != end & start.getNextNode() != end.getPrevNode())
 			{
 				value++;
 				start = start.getNextNode();
@@ -136,27 +122,21 @@ public class CircularDoublyLinkedList
 		return size;
 	}
 
-	public boolean isEmptyList()
-	{
-		return head == null;
-	}
-
 	@Override
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append("CircularDoublyLinkedList: [");
+		builder.append("DoublyLinkedList: [");
 		if( head != null )
 		{
 			DoubleNode current = head;
-			while(current.getNextNode() != head)
+			while(current != null)
 			{
 				builder.append(current.getData())
 						.append(" -> ");
 				current = current.getNextNode();
 			}
-			builder.append(current.getData()).append(" -> ");
-			builder.append("--");
+			builder.append("null");
 		}
 		builder.append("]");
 		return builder.toString();

@@ -1,4 +1,4 @@
-package com.jai.practice.ds.recursion;
+package dev.jaib.practice.ds.recursion;
 
 public class FindBiggestNumberUsingRecursion
 {

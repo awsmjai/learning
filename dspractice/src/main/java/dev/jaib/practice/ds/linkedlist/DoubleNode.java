@@ -1,4 +1,4 @@
-package com.jai.practice.ds.linkedlist;
+package dev.jaib.practice.ds.linkedlist;
 
 public class DoubleNode
 {

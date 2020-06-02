@@ -1,4 +1,4 @@
-package com.jai.practice.ds.array;
+package dev.jaib.practice.ds.array;
 
 public class ArrayMain
 {

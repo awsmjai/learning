@@ -1,6 +1,6 @@
-package com.jai.practice.ds.test.linkedlist;
+package dev.jaib.practice.ds.test.linkedlist;
 
-import com.jai.practice.ds.linkedlist.DoublyLinkedList;
+import dev.jaib.practice.ds.linkedlist.DoublyLinkedList;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
