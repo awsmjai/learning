@@ -1,0 +1,11 @@
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+group 'dev.jaib.practice.ds'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
